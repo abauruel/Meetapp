@@ -17,3 +17,12 @@
 const Route = use('Route')
 
 Route.post('User', 'UserController.store').validator('User')
+Route.put('User', 'UserController.update').middleware(['auth'])
+
+Route.post('Session', 'SessionController.store')
+Route.resource('Preference', 'PreferenceController').apiOnly()
+Route.group(() => {}).middleware(['auth'])
+
+Route.post('Meetup', 'MeetupController.store')
+Route.get('Meetup', 'MeetupController.show')
+Route.get('Meetups', 'MeetupController.index')
