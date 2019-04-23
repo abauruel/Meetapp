@@ -1,17 +1,9 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
-
-/**
- * Resourceful controller for interacting with meetups
- */
 const Meetup = use('App/Models/Meetup')
 class MeetupController {
   async index ({ request, response, view }) {
     const meetups = await Meetup.all()
-    console.log(meetups.toJSON())
     return meetups
   }
 
@@ -29,10 +21,11 @@ class MeetupController {
     return meetup
   }
 
-  async show ({ params, request, response, view }) {
+  async show ({ params, request, response, view, auth }) {
     const search = request.only(['title'])
     const meetups = await Meetup.query()
       .where('title', 'like', `%${search.title}%`)
+      .with('users', q => q.count('id'))
       .fetch()
 
     return meetups

@@ -4,8 +4,11 @@
 const Model = use('Model')
 
 class Meetup extends Model {
+  static getCount () {
+    return this.users().getCount()
+  }
   users () {
-    return this.belongsToMany('App/Models/Users').pivotModel(
+    return this.belongsToMany('App/Models/User').pivotModel(
       'App/Models/Inscription'
     )
   }

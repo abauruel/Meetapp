@@ -26,3 +26,6 @@ Route.group(() => {}).middleware(['auth'])
 Route.post('Meetup', 'MeetupController.store')
 Route.get('Meetup', 'MeetupController.show')
 Route.get('Meetups', 'MeetupController.index')
+
+Route.post('Incription/:id', 'InscripitonController.store').middleware(['auth'])
+Route.put('Incription/:id', 'InscripitonController.update').middleware(['auth'])
