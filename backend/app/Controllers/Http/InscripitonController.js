@@ -6,7 +6,7 @@ const moment = use('moment')
 class InscripitonController {
   async store ({ request, auth, params }) {
     const meetup = await Meetup.findOrFail(params.id)
-    // await meetup.users().attach(auth.user.id)
+    await meetup.users().attach(auth.user.id)
     Kue.dispatch(
       Job.key,
       {

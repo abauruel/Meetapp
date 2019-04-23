@@ -19,6 +19,13 @@ const Route = use('Route')
 Route.post('User', 'UserController.store').validator('User')
 Route.put('User', 'UserController.update').middleware(['auth'])
 
+Route.get('Usernotin', 'UserController.showMeetupsNotRegistred').middleware([
+  'auth'
+])
+Route.get('UserMeetups', 'UserController.showMeetupsRegistred').middleware([
+  'auth'
+])
+
 Route.post('Session', 'SessionController.store')
 Route.resource('Preference', 'PreferenceController').apiOnly()
 Route.group(() => {}).middleware(['auth'])
