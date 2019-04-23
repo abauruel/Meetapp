@@ -36,12 +36,13 @@ class UserController {
     const preferences = await user.preferences().fetch()
     const preferencesArray = []
     preferences.toJSON().map(m => preferencesArray.push(m.id))
+    const inscricoesArray = []
+    const inscricoes = await user.meetups().fetch()
+    inscricoes.toJSON().map(i => inscricoesArray.push(i.id))
     const meetups = await Meetup.query()
       .where(`date`, '>', `${moment(Date.now()).format('YYYY-MM-DD')}`)
       .whereIn('preference_id', preferencesArray)
-      .with('users', builder => {
-        builder.where('user_id', '<>', auth.user.id)
-      })
+      .whereNotIn('id', inscricoesArray)
       .fetch()
 
     return meetups
