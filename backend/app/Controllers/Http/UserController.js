@@ -3,8 +3,13 @@ const moment = require('moment')
 const User = use('App/Models/User')
 const Meetup = use('App/Models/Meetup')
 class UserController {
+  async isFirstLogin ({ auth }) {
+    const user = await User.findOrFail(auth.user.id)
+    return user.islogin
+  }
+
   async store ({ request }) {
-    const data = request.only(['username', 'email', 'password'])
+    const data = request.only(['name', 'email', 'password'])
     const user = await User.create(data)
 
     return user
@@ -22,7 +27,7 @@ class UserController {
 
     await user.preferences().sync(data.preferences)
     user.merge({
-      username: data.username,
+      name: data.name,
       password: data.password
     })
     await user.save()

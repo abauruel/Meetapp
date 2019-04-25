@@ -16,23 +16,24 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.post('User', 'UserController.store').validator('User')
-Route.put('User', 'UserController.update').middleware(['auth'])
+Route.post('User', 'userController.store').validator('User')
+Route.put('User', 'userController.update').middleware(['auth'])
+Route.get('firstLogin', 'userController.isFirstLogin').middleware(['auth'])
 
-Route.get('Usernotin', 'UserController.showMeetupsNotRegistred').middleware([
+Route.get('Usernotin', 'userController.showMeetupsNotRegistred').middleware([
   'auth'
 ])
-Route.get('UserMeetups', 'UserController.showMeetupsRegistred').middleware([
+Route.get('UserMeetups', 'userController.showMeetupsRegistred').middleware([
   'auth'
 ])
 
-Route.post('Session', 'SessionController.store')
-Route.resource('Preference', 'PreferenceController').apiOnly()
+Route.post('Session', 'sessionController.store')
+Route.resource('Preference', 'preferenceController').apiOnly()
 Route.group(() => {}).middleware(['auth'])
 
-Route.post('Meetup', 'MeetupController.store')
-Route.get('Meetup', 'MeetupController.show')
-Route.get('Meetups', 'MeetupController.index')
+Route.post('Meetup', 'meetupController.store')
+Route.get('Meetup', 'meetupController.show')
+Route.get('Meetups', 'meetupController.index')
 
-Route.post('Incription/:id', 'InscripitonController.store').middleware(['auth'])
-Route.put('Incription/:id', 'InscripitonController.update').middleware(['auth'])
+Route.post('Incription/:id', 'inscripitonController.store').middleware(['auth'])
+Route.put('Incription/:id', 'inscripitonController.update').middleware(['auth'])

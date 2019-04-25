@@ -10,7 +10,7 @@ class InscripitonController {
     Kue.dispatch(
       Job.key,
       {
-        username: auth.user.username,
+        name: auth.user.name,
         title: meetup.title,
         data: moment(meetup.date).format('DD/MM/YYYY'),
         local: meetup.location,

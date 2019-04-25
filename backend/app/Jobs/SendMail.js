@@ -10,7 +10,7 @@ class SendMail {
     return 'SendMail-job'
   }
 
-  async handle ({ email, username, title, data, local }) {
+  async handle ({ email, name, title, data, local }) {
     console.log(`job ${SendMail.key}`)
 
     await Mail.send(
@@ -24,7 +24,7 @@ class SendMail {
       message => {
         message
           .to(email)
-          .from('abauruel#gmail.com')
+          .from('abauruel@gmail.com')
           .subject('Confirmação de inscrição')
       }
     )
