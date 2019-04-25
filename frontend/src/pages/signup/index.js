@@ -1,45 +1,46 @@
 import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
 import logo from "../../assets/logo.svg";
+
 import { Content, Form } from "./styles";
 
 import api from "../../services/api";
-import { login } from "../../services/auth";
-import { Link, withRouter } from "react-router-dom";
 
-class Signin extends Component {
+class Signup extends Component {
   state = {
+    name: "",
     email: "",
     password: ""
   };
   handleSubmmit = async e => {
+    const { name, email, password } = this.state;
     e.preventDefault();
     try {
-      const response = await api.post("session", {
-        email: this.state.email,
-        password: this.state.password
+      const response = await api.post("user", {
+        name,
+        email,
+        password
       });
-      console.log(response);
-      login(response.data.token);
-      const firstLogin = await api.get("firstLogin");
-      console.log(firstLogin);
-      if (firstLogin.data === 0) {
-        console.log(firstLogin);
-        this.props.history.push("/Preference");
-      } else {
-        this.props.history.push("/Dashboard");
-      }
+      this.props.history.push("/Signin");
     } catch (err) {}
   };
   handleInputChange = e => {
-    const { name, value } = e.target;
+    const { value, name } = e.target;
     this.setState({ [name]: value });
   };
-
   render() {
     return (
       <Content>
         <Form onSubmit={this.handleSubmmit}>
           <img src={logo} alt="Meetup" />
+          <label>Nome</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Digite seu nome"
+            autoComplete="email"
+            onChange={this.handleInputChange}
+          />
           <label>Email</label>
           <input
             type="text"
@@ -56,12 +57,13 @@ class Signin extends Component {
             placeholder="Sua senha secreta"
             onChange={this.handleInputChange}
           />
-          <button type="submit">Entrar</button>
-          <Link to="/Signup">Criar conta grátis</Link>
+
+          <button type="submit">Criar conta</button>
+          <Link to="/Signin">Já tenho conta</Link>
         </Form>
       </Content>
     );
   }
 }
 
-export default withRouter(Signin);
+export default withRouter(Signup);
