@@ -3,6 +3,12 @@ const moment = require('moment')
 const User = use('App/Models/User')
 const Meetup = use('App/Models/Meetup')
 class UserController {
+  async index ({ auth }) {
+    const user = await User.findOrFail(auth.user.id)
+    user.preferences = await user.preferences().fetch()
+
+    return user
+  }
   async isFirstLogin ({ auth }) {
     const user = await User.findOrFail(auth.user.id)
     return user.islogin
