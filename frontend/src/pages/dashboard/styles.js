@@ -13,4 +13,18 @@ height: 100%;
 display: flex;
 flex-direction: column
 
+p{
+    font-family:Helvetica;
+    font-weight: bolder;
+    font-size:16px;
+    color:#FFF;
+    text-align:left;
+}
+
+`;
+
+export const Meetups = Styled.div`
+display:flex;
+
+
 `;

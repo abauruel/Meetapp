@@ -7,6 +7,8 @@ import Signin from "../pages/signin";
 import Signup from "../pages/signup";
 import Preference from "../pages/preferences";
 import Dashboard from "../pages/dashboard";
+import Meetup from "../pages/meetup";
+import Profile from "../pages/profile";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -30,6 +32,8 @@ const Routes = () => (
 
       <PrivateRoute exact path="/Dashboard" component={Dashboard} />
       <PrivateRoute exact path="/Preference" component={Preference} />
+      <Route exact path="/Profile" component={Profile} />
+      <Route exact path="/Meetup/:id" component={Meetup} />
       <Route exact path="/signup" component={Signup} />
     </Switch>
   </BrowserRouter>
