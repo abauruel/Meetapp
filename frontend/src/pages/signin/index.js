@@ -20,14 +20,7 @@ class Signin extends Component {
       });
       console.log(response);
       login(response.data.token);
-      const firstLogin = await api.get("firstLogin");
-      console.log(firstLogin);
-      if (firstLogin.data === 0) {
-        console.log(firstLogin);
-        this.props.history.push("/Preference");
-      } else {
-        this.props.history.push("/Dashboard");
-      }
+      this.props.history.push("/Dashboard");
     } catch (err) {}
   };
   handleInputChange = e => {
