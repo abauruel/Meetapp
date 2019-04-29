@@ -30,6 +30,7 @@ export default class Dashboard extends Component {
     return (
       <Container>
         <Header />
+
         <Content>
           <p>Inscrições</p>
           <Meetups>

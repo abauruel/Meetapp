@@ -3,6 +3,7 @@ import { Container, Content, Details } from "./styles";
 import Header from "../../components/header";
 
 import api from "../../services/api";
+import Moment from "moment";
 
 export default class Meetup extends Component {
   state = {
@@ -34,6 +35,10 @@ export default class Meetup extends Component {
             <p>{description}</p>
             <span>Realizado em:</span>
             <p>{location}</p>
+            <span>Quando?</span>
+            <p>
+              {Moment(this.state.meetup.date).format("DD MMMM YYYY, h:mm a")}
+            </p>
             <button onClick={this.handleClick}>Inscreva-se</button>
           </Details>
         </Content>

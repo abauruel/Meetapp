@@ -11,7 +11,7 @@ const Header = () => (
           <a href="/Dashboard">Inicio</a>
         </li>
         <li>
-          <a href="/Buscar">Buscar</a>
+          <a href="/Search">Buscar</a>
         </li>
         <li>
           <a href="/NewMeetup">Novo Meetup</a>
