@@ -11,7 +11,9 @@ class Preference extends Model {
   }
 
   meetups () {
-    return this.belongsTo('App/Models/Meetup')
+    return this.belongsToMany('App/Models/Meetup').pivotModel(
+      'App/Models/MeetupPreference'
+    )
   }
 }
 

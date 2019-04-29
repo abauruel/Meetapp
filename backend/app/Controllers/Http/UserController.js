@@ -44,15 +44,16 @@ class UserController {
 
   async showMeetupsNotRegistred ({ auth }) {
     const user = await User.findOrFail(auth.user.id)
-    const preferences = await user.preferences().fetch()
-    const preferencesArray = []
-    preferences.toJSON().map(m => preferencesArray.push(m.id))
-    const inscricoesArray = []
-    const inscricoes = await user.meetups().fetch()
-    inscricoes.toJSON().map(i => inscricoesArray.push(i.id))
+    const userPreferences = await user.preferences().fetch()
+
+    const userPreferencesArray = []
+    userPreferences.toJSON().map(m => userPreferencesArray.push(m.id))
+    const inscriptionsArray = []
+    const enrolled = await user.meetups().fetch()
+    enrolled.toJSON().map(i => inscriptionsArray.push(i.id))
     const meetups = await Meetup.query()
       .where(`date`, '>', `${moment(Date.now()).format('YYYY-MM-DD')}`)
-      .whereIn('preference_id', preferencesArray)
+      .with('preferences', q => q.whereIn('id', preferencesArray))
       .whereNotIn('id', inscricoesArray)
       .fetch()
 

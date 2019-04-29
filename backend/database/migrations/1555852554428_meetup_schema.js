@@ -12,11 +12,6 @@ class MeetupSchema extends Schema {
       table.string('description')
       table.string('Eventphoto')
       table.string('location')
-      table
-        .integer('preference_id')
-        .unsigned()
-        .notNullable()
-        .references('preferences.id')
       table.timestamps()
     })
   }

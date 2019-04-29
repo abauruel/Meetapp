@@ -32,6 +32,8 @@ Route.get('UserMeetups', 'userController.showMeetupsRegistred').middleware([
   'auth'
 ])
 
+Route.post('File', 'FileController.store')
+
 Route.post('Session', 'sessionController.store')
 Route.resource('Preference', 'preferenceController').apiOnly()
 Route.group(() => {}).middleware(['auth'])

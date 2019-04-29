@@ -12,8 +12,13 @@ class Meetup extends Model {
       'App/Models/Inscription'
     )
   }
-  preference () {
-    return this.hasOne('App/Models/Preference')
+  preferences () {
+    return this.belongsToMany('App/Models/Preference').pivotModel(
+      'App/Models/MeetupPreference'
+    )
+  }
+  files () {
+    return this.hasOne('App/Models/File')
   }
 }
 

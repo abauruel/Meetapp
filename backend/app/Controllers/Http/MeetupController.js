@@ -2,6 +2,7 @@
 
 const Meetup = use('App/Models/Meetup')
 const moment = require('moment')
+const Helpers = use('Helpers')
 class MeetupController {
   async index ({ request, response, view }) {
     const meetups = await Meetup.all()
@@ -19,16 +20,16 @@ class MeetupController {
       'title',
       'date',
       'description',
-      'eventphoto',
       'location',
-      'preference_id'
+      'preferences'
     ])
-    const meetup = await Meetup.create(data)
-
+    const { title, date, description, location } = data
+    const meetup = await Meetup.create({ title, date, description, location })
+    await meetup.preferences().attach(data.preferences)
     return meetup
   }
 
-  async show ({ params, request, response, view, auth }) {
+  async show ({ params }) {
     const meetup = await Meetup.findOrFail(params.id)
     return meetup
   }
