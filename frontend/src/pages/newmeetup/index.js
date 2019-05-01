@@ -4,21 +4,73 @@ import Dropzone from "react-dropzone";
 import { Container, Wrapper, Content, ButtonImage, ButtonSave } from "./styles";
 import Header from "../../components/header";
 import CheckBox from "../../components/checkbox";
+
+import DataPicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import pt from "date-fns/locale/pt-BR";
+
+import api from "../../services/api";
+
 class Newmeetup extends Component {
   state = {
     title: "",
     description: "",
     data: "",
     location: "",
-    file: []
+    file: [],
+    imgSrc: null
   };
-  handleDrop = file => this.setState({ file });
 
-  handleUpload = file => {};
+  componentWillmount = () => {
+    registerLocale("pt", pt);
+  };
+  handleDrop = (files, rejectedFiles) => {
+    const currentFile = files[0];
+    const myFileItemImage = new FileReader();
+    myFileItemImage.addEventListener(
+      "load",
+      () => {
+        this.setState({
+          imgSrc: myFileItemImage.result
+        });
+      },
+      false
+    );
+    myFileItemImage.readAsDataURL(currentFile);
+  };
 
-  handleSubmit = () => {};
+  handleSubmit = async e => {
+    e.preventDefault();
+
+    const { title, description, data, location, file } = this.state;
+
+    try {
+      const {
+        data: { id }
+      } = await api.post("Meetup", { title, description, data, location });
+      console.log(id);
+      if (file.length) {
+        const data = new FormData();
+        console.tron.log(file.name);
+        data.append("file", file);
+        const config = {
+          headers: { "content-type": "multipart/form-data" }
+        };
+        await api.post(`File/${id}`, data, config);
+        this.props.history.push("/Dashboard");
+      }
+    } catch (error) {
+      console.tron.log(error);
+    }
+  };
+  handleSetDate = date => {
+    this.setState({
+      data: date
+    });
+  };
+
   render() {
-    const { title, description, data, location } = this.state;
+    const { title, description, data, location, imgSrc } = this.state;
     return (
       <Container>
         <Header />
@@ -40,24 +92,31 @@ class Newmeetup extends Component {
                 onChange={e => this.setState({ description: e.target.value })}
               />
               <label>Data/hora</label>
-              <input
-                type="text"
-                placeholder="Quando o meetup irá acontecer?"
-                value={data}
-                onChange={e => this.setState({ data: e.target.value })}
+              <DataPicker
+                className="datapicker"
+                dateFormat="dd/MM/YYYY hh:mm:ss a"
+                selected={data}
+                showTimeSelect
+                onChange={this.handleSetDate}
+                placeholderText="Quando o meetup irá acontecer?"
+                locale={pt}
+                withPortal
               />
+
               <label>Imagem</label>
               <Dropzone
-                onDropAccepted={this.handleUpload}
                 onDrop={this.handleDrop}
+                multipe={false}
+                accept="image/*"
+                maxSize={2000000}
               >
                 {({ getRootProps, getInputProps }) => (
                   <ButtonImage {...getRootProps()}>
                     <input {...getInputProps()} />
-                    {!this.state.file.length ? (
-                      <p>Arrate o clique aqui para adicionar</p>
+                    {imgSrc !== null ? (
+                      <img src={imgSrc} />
                     ) : (
-                      <p>uploaded</p>
+                      <p>Arrate o clique aqui para adicionar</p>
                     )}
                   </ButtonImage>
                 )}

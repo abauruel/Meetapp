@@ -33,6 +33,7 @@ export const Content = Styled.div`
     
     }
     input{
+        width:300px;
         opacity: 0.5;
         background: #26202c;
         border: none;
@@ -44,6 +45,49 @@ export const Content = Styled.div`
         font-family:Helvetica;
         font-size:20px;
         color:#ffffff;
+    }
+    .react-datepicker {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 0.8rem;
+        background: #26202c;
+        }
+        .react-datepicker__header {
+            background: #26202c;
+            border-bottom: 1px solid #aeaeae;   
+        }
+        .react-datepicker__current-month,
+        .react-datepicker-time__header,
+        .react-datepicker-year-header {
+        color: #ffffff;
+        }
+        .react-datepicker__time-container .react-datepicker__time {
+        background: #26202c;
+        color:#ffffff;
+        }
+       .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item:hover {
+            background: #E5556E;
+        }
+        
+        .react-datepicker__day-name,
+        .react-datepicker__day,
+        .react-datepicker__time-name
+        .react-datepicker__time {
+        color:#ffffff;
+        }
+
+        .react-datepicker__day--keyboard-selected,
+        .react-datepicker__month-text--keyboard-selected {
+            background: #E5556E;;
+        color: #fff;
+        }
+        .react-datepicker__day--selected:hover{
+            background: #E5556E;    
+        }
+        
+        
+ 
+    .react-datepicker__day--selected{
+        background: #E5556E;
     }
    
     
@@ -63,9 +107,12 @@ opacity: 0.5;
       color: #c0c0c0;
 
   }
+  img{
+    height: 97px;      
+        }
     
 `;
-export const ButtonSave = Styled.div`
+export const ButtonSave = Styled.button`
         margin: 20px 0 0;
         background: #E5556E;
         border-radius: 50px;
@@ -78,4 +125,7 @@ export const ButtonSave = Styled.div`
         :hover{
         background: #eb788c;   
         }
+        
+
+        
 `;
