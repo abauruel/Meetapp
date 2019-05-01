@@ -2,18 +2,18 @@
 const Helpers = use('Helpers')
 const File = use('App/Models/File')
 class FileController {
-  async store ({ request, response }) {
+  async store ({ params, request, response }) {
     try {
       const upload = request.file('file', { size: '2mb' })
-      const { meetup_id } = request.only(['meetup_id'])
-      console.log(meetup_id)
+      const meetup_id = params.id
+      console.log(params.id)
       const fileName = `${Date.now()}.${upload.subtype}`
 
       await upload.move(Helpers.tmpPath('uploads'), { name: fileName })
       if (!upload.moved()) {
         throw upload.error()
       }
-      console.log(`${upload.clientName}, ${meetup_id.data}`)
+
       const file = await File.create({
         file: fileName,
         name: upload.clientName,
