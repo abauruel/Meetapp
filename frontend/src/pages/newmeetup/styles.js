@@ -1,5 +1,4 @@
 import Styled from "styled-components";
-import Dropzone from "react-dropzone";
 
 export const Container = Styled.div`
  height: 100%;
@@ -46,10 +45,10 @@ export const Content = Styled.div`
         font-size:20px;
         color:#ffffff;
     }
-    .react-datepicker {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-size: 0.8rem;
-        background: #26202c;
+        .react-datepicker {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 0.8rem;
+            background: #26202c;
         }
         .react-datepicker__header {
             background: #26202c;
@@ -58,11 +57,11 @@ export const Content = Styled.div`
         .react-datepicker__current-month,
         .react-datepicker-time__header,
         .react-datepicker-year-header {
-        color: #ffffff;
+            color: #ffffff;
         }
         .react-datepicker__time-container .react-datepicker__time {
-        background: #26202c;
-        color:#ffffff;
+            background: #26202c;
+            color:#ffffff;
         }
        .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item:hover {
             background: #E5556E;
@@ -72,13 +71,13 @@ export const Content = Styled.div`
         .react-datepicker__day,
         .react-datepicker__time-name
         .react-datepicker__time {
-        color:#ffffff;
+            color:#ffffff;
         }
 
         .react-datepicker__day--keyboard-selected,
         .react-datepicker__month-text--keyboard-selected {
             background: #E5556E;;
-        color: #fff;
+            color: #fff;
         }
         .react-datepicker__day--selected:hover{
             background: #E5556E;    
@@ -86,10 +85,10 @@ export const Content = Styled.div`
         
         
  
-    .react-datepicker__day--selected{
-        background: #E5556E;
-    }
-   
+        .react-datepicker__day--selected{
+            background: #E5556E;
+        }
+    
     
 `;
 export const ButtonImage = Styled.button`

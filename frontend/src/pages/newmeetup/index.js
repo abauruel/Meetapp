@@ -24,6 +24,7 @@ class Newmeetup extends Component {
   componentWillmount = () => {
     registerLocale("pt", pt);
   };
+
   handleDrop = (files, rejectedFiles) => {
     const currentFile = files[0];
     const myFileItemImage = new FileReader();
@@ -37,40 +38,41 @@ class Newmeetup extends Component {
       false
     );
     myFileItemImage.readAsDataURL(currentFile);
+    this.setState({ file: files });
   };
 
   handleSubmit = async e => {
     e.preventDefault();
 
     const { title, description, data, location, file } = this.state;
-
     try {
       const {
         data: { id }
-      } = await api.post("Meetup", { title, description, data, location });
-      console.log(id);
-      if (file.length) {
-        const data = new FormData();
-        console.tron.log(file.name);
-        data.append("file", file);
-        const config = {
-          headers: { "content-type": "multipart/form-data" }
-        };
-        await api.post(`File/${id}`, data, config);
-        this.props.history.push("/Dashboard");
-      }
+      } = await api.post("/Meetup", title, description, data, location);
+
+      if (!file.length) return;
+      const data = new FormData();
+      file.map(file => data.append("file", file, file.name));
+
+      const config = {
+        headers: { "content-type": "multipart/form-data" }
+      };
+
+      await api.post(`File/${id}`, data, config);
+
+      this.props.history.push("/Dashboard");
     } catch (error) {
-      console.tron.log(error);
+      return;
     }
   };
   handleSetDate = date => {
     this.setState({
-      data: date
+      day: date
     });
   };
 
   render() {
-    const { title, description, data, location, imgSrc } = this.state;
+    const { title, description, day, location, imgSrc } = this.state;
     return (
       <Container>
         <Header />
@@ -95,7 +97,7 @@ class Newmeetup extends Component {
               <DataPicker
                 className="datapicker"
                 dateFormat="dd/MM/YYYY hh:mm:ss a"
-                selected={data}
+                selected={day}
                 showTimeSelect
                 onChange={this.handleSetDate}
                 placeholderText="Quando o meetup irá acontecer?"
@@ -106,13 +108,13 @@ class Newmeetup extends Component {
               <label>Imagem</label>
               <Dropzone
                 onDrop={this.handleDrop}
-                multipe={false}
+                multiple={false}
                 accept="image/*"
                 maxSize={2000000}
               >
                 {({ getRootProps, getInputProps }) => (
                   <ButtonImage {...getRootProps()}>
-                    <input {...getInputProps()} />
+                    <input {...getInputProps()} name="file" />
                     {imgSrc !== null ? (
                       <img src={imgSrc} />
                     ) : (
@@ -131,7 +133,7 @@ class Newmeetup extends Component {
 
               <label>Tema do meetup</label>
               <CheckBox />
-              <ButtonSave>Salvar</ButtonSave>
+              <ButtonSave type="submit">Salvar</ButtonSave>
             </Content>
           </form>
         </Wrapper>
