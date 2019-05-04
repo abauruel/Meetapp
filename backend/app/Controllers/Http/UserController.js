@@ -53,8 +53,8 @@ class UserController {
     enrolled.toJSON().map(i => inscriptionsArray.push(i.id))
     const meetups = await Meetup.query()
       .where(`date`, '>', `${moment(Date.now()).format('YYYY-MM-DD')}`)
-      .with('preferences', q => q.whereIn('id', preferencesArray))
-      .whereNotIn('id', inscricoesArray)
+      .with('preferences', q => q.whereIn('id', userPreferencesArray))
+      .whereNotIn('id', inscriptionsArray)
       .fetch()
 
     return meetups
