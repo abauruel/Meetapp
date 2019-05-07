@@ -62,9 +62,12 @@ class UserController {
 
   async showMeetupsRegistred ({ auth }) {
     const user = await User.findOrFail(auth.user.id)
+    console.log(user.id)
     const meetups = user
       .meetups()
-      .where('meetups.date', '>', `${moment(Date.now()).format('YYYY-MM-DD')}`)
+      // .where('meetups.date', '>', `${moment(Date.now()).format('YYYY-MM-DD')}`)
+      .innerJoin('files', 'meetups.id', 'files.meetup_id')
+      .with('files')
       .fetch()
 
     return meetups

@@ -5,7 +5,10 @@ const moment = require('moment')
 const Helpers = use('Helpers')
 class MeetupController {
   async index ({ request, response, view }) {
-    const meetups = await Meetup.all()
+    const meetups = await Meetup.query()
+      .meetupResume()
+      .fetch()
+
     return meetups
   }
   async comingSoon () {

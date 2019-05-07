@@ -4,9 +4,17 @@
 const Model = use('Model')
 
 class Meetup extends Model {
-  static getCount () {
-    return this.users().getCount()
+  static scopeMeetupResume (query) {
+    return query
+      .innerJoin('files', 'meetups.id', 'files.meetup_id')
+      .rightJoin('inscriptions', 'meetups.id', 'inscriptions.meetup_id')
+      .groupBy('meetups.title')
+      .select('meetups.id', 'meetups.title', 'files.file')
   }
+  static scopeMeetupPivotCount (query) {
+    return query.has('users').count
+  }
+
   users () {
     return this.belongsToMany('App/Models/User').pivotModel(
       'App/Models/Inscription'

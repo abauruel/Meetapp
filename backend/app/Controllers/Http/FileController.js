@@ -6,7 +6,6 @@ class FileController {
     try {
       const upload = request.file('file', { size: '2mb' })
       const meetup_id = params.id
-      console.log(params.id)
       const fileName = `${Date.now()}.${upload.subtype}`
 
       await upload.move(Helpers.tmpPath('uploads'), { name: fileName })
