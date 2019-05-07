@@ -1,13 +1,9 @@
 import React from "react";
-import { Group, HiddenCheckbox, StyledCheckBox, Label } from "./styles";
+import { Group } from "./styles";
 const CheckBox = ({ checked, name, onChange, id }) => (
   <Group>
-    <label>
-      <HiddenCheckbox onChange={onChange} name={name} id={id} />
-      <StyledCheckBox checked={checked} name={name}>
-        <Label>{name}</Label>
-      </StyledCheckBox>
-    </label>
+    <input type="checkbox" onChange={onChange} id={id} />
+    <label htmlFor={id}>{name}</label>
   </Group>
 );
 

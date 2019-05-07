@@ -4,7 +4,11 @@ import api from "../../services/api";
 import Header from "../../components/header";
 import List from "../../components/list";
 
-import { Container, Content, Meetups } from "./styles";
+import { Container, Content, Meetups, Teste } from "./styles";
+
+import Slider from "react-slick";
+import "../../../node_modules/slick-carousel/slick/slick.css";
+import "../../../node_modules/slick-carousel/slick/slick-theme.css";
 
 export default class Dashboard extends Component {
   state = {
@@ -25,8 +29,16 @@ export default class Dashboard extends Component {
       comingSoon: comingSoon.data
     });
   };
+
   render() {
-    console.log(this.state.notEnrolled);
+    const settings = {
+      dots: true,
+      infinite: false,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+
+      cssEase: "linear"
+    };
     return (
       <Container>
         <Header />
@@ -34,36 +46,44 @@ export default class Dashboard extends Component {
         <Content>
           <p>Inscrições</p>
           <Meetups>
-            {this.state.enrolled.map(meetup => (
-              <List
-                key={meetup.id}
-                title={meetup.title}
-                data={meetup.date}
-                id={meetup.id}
-              />
-            ))}
+            <Slider {...settings}>
+              {this.state.enrolled.map(meetup => (
+                <List
+                  key={meetup.id}
+                  title={meetup.title}
+                  data={meetup.date}
+                  id={meetup.id}
+                  evento={meetup.files.file}
+                />
+              ))}
+            </Slider>
           </Meetups>
           <p>Próximos Meetups</p>
           <Meetups>
-            {this.state.comingSoon.map(meetup => (
-              <List
-                key={meetup.id}
-                title={meetup.title}
-                data={meetup.date}
-                id={meetup.id}
-              />
-            ))}
+            <Slider {...settings}>
+              {this.state.comingSoon.map(meetup => (
+                <List
+                  key={meetup.id}
+                  title={meetup.title}
+                  data={meetup.date}
+                  id={meetup.id}
+                />
+              ))}
+            </Slider>
           </Meetups>
           <p>Recomendados</p>
           <Meetups>
-            {this.state.notEnrolled.map(meetup => (
-              <List
-                key={meetup.id}
-                title={meetup.title}
-                data={meetup.date}
-                id={meetup.id}
-              />
-            ))}
+            <Slider {...settings}>
+              {this.state.notEnrolled.map(meetup => (
+                <List
+                  key={meetup.id}
+                  title={meetup.title}
+                  data={meetup.date}
+                  id={meetup.id}
+                  onDragStart={this.handleOnDragStart}
+                />
+              ))}
+            </Slider>
           </Meetups>
         </Content>
       </Container>

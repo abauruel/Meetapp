@@ -13,7 +13,7 @@ export const Wrapper = Styled.div`
     flex-direction: column;
     justify-content: center;
     align-items:center;
-	
+
     
 `;
 
@@ -39,6 +39,7 @@ export const Content = Styled.div`
         font-family:Helvetica;
         font-size:20px;
         color: #fff;
+        text-align: left;
     }
     p{
         font-family:Helvetica;

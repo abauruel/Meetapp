@@ -14,6 +14,8 @@ import Search from "../pages/search";
 import NewMeetup from "../pages/newmeetup";
 import Profile from "../pages/profile";
 
+import Teste from "../pages/teste";
+
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
@@ -34,7 +36,6 @@ const Routes = () => (
     <Fragment>
       <Switch>
         <Route path="/signin" component={Signin} />
-
         <PrivateRoute exact path="/Dashboard" component={Dashboard} />
         <PrivateRoute exact path="/Preference" component={Preference} />
         <Route exact path="/Profile" component={Profile} />
@@ -42,6 +43,7 @@ const Routes = () => (
         <Route exact path="/Search" component={Search} />
         <Route exact path="/Meetup/:id" component={Meetup} />
         <Route exact path="/signup" component={Signup} />
+        <Route exact path="/teste" component={Teste} />s
       </Switch>
       <ModalContainer />
     </Fragment>

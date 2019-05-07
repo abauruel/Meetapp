@@ -6,13 +6,15 @@ display: flex;
 flex-direction: column;
 
 `;
-export const Content = Styled.div`
-margin-left: 230px;
-margin-top: 35px;
-height: 100%;
-display: flex;
-flex-direction: column
 
+export const Content = Styled.div`
+
+    margin-left: 230px;
+    margin-top: 35px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
 p{
     font-family:Helvetica;
     font-weight: bolder;
@@ -24,7 +26,8 @@ p{
 `;
 
 export const Meetups = Styled.div`
-display:flex;
+width: 1000px;
+
 
 
 `;

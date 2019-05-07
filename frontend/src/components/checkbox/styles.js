@@ -1,31 +1,32 @@
 import Styled from "styled-components";
 
 export const Group = Styled.div`
-
-
-
-`;
-
-export const HiddenCheckbox = Styled.input.attrs({ type: "checkbox" })`
-
-`;
-
-export const StyledCheckBox = Styled.div`
-  display: inline-block;
-  margin: 10px;
-  width: 20px;
-  height: 20px;
-  background: ${props => (props.checked === props.name ? "#E5556E" : "#fff")};
-  border-radius: 4px;
-  transition: all 150ms;
   
-`;
-export const Label = Styled.label`
-    width: 10px;
-    margin-left: 30px;
-    font-family:Helvetica;
-    font-size:18px;
-    color:#ffffff;
-    text-align:left;
-  
+ input{
+        display: none;
+        
+    }
+    label{
+        font-size: 20px;
+        margin-bottom: 0px;
+        padding-left: 35px;
+        cursor: pointer;
+        display: block;
+
+    }
+    label::before{
+        content: "|_|";
+        width: 20px;
+        height: 20px;
+        border: none;
+        border-radius: 4px;
+        display: inline;
+        background: #c0c0c0;
+        margin-right: 10px;
+        color: #c0c0c0;
+    }
+    input:checked + label::before{
+        background: #E5556E;
+        color: #E5556E;
+    }
 `;

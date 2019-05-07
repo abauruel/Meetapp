@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import { Container, Wrapper, Content, ButtonImage, ButtonSave } from "./styles";
+import {
+  Container,
+  Wrapper,
+  Content,
+  ButtonImage,
+  ButtonSave,
+  ContainerCheckBox
+} from "./styles";
 import Header from "../../components/header";
 import CheckBox from "../../components/checkbox";
 
@@ -10,19 +17,28 @@ import "react-datepicker/dist/react-datepicker.css";
 import pt from "date-fns/locale/pt-BR";
 
 import api from "../../services/api";
+import Moment from "moment";
 
 class Newmeetup extends Component {
   state = {
     title: "",
     description: "",
-    data: "",
+    day: "",
     location: "",
     file: [],
-    imgSrc: null
+    imgSrc: null,
+    defaultPreferences: [],
+    preferences: []
   };
 
   componentWillmount = () => {
     registerLocale("pt", pt);
+  };
+  componentDidMount = async () => {
+    const preferences = await api.get("/preference");
+
+    this.setState({ defaultPreferences: preferences.data });
+    console.log(this.state.defaultPreferences);
   };
 
   handleDrop = (files, rejectedFiles) => {
@@ -44,12 +60,17 @@ class Newmeetup extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
-    const { title, description, data, location, file } = this.state;
+    const { title, description, day, location, file } = this.state;
+    const eventDate = Moment(day).format("YYYY-MM-DD h:mm:ss");
     try {
       const {
         data: { id }
-      } = await api.post("/Meetup", title, description, data, location);
-
+      } = await api.post("/Meetup", {
+        title,
+        description,
+        date: eventDate,
+        location
+      });
       if (!file.length) return;
       const data = new FormData();
       file.map(file => data.append("file", file, file.name));
@@ -62,7 +83,7 @@ class Newmeetup extends Component {
 
       this.props.history.push("/Dashboard");
     } catch (error) {
-      return;
+      return console.log(error);
     }
   };
   handleSetDate = date => {
@@ -70,7 +91,16 @@ class Newmeetup extends Component {
       day: date
     });
   };
-
+  handleChange = e => {
+    const target = e.target;
+    target.checked
+      ? this.setState({
+          preferences: [...this.state.preferences, e.target.id]
+        })
+      : this.setState({
+          preferences: this.state.preferences.filter(n => n !== e.target.id)
+        });
+  };
   render() {
     const { title, description, day, location, imgSrc } = this.state;
     return (
@@ -132,7 +162,16 @@ class Newmeetup extends Component {
               />
 
               <label>Tema do meetup</label>
-              <CheckBox />
+
+              {this.state.defaultPreferences.map(preference => (
+                <CheckBox
+                  id={preference.id}
+                  key={preference.id}
+                  name={preference.description}
+                  onChange={this.handleChange}
+                />
+              ))}
+
               <ButtonSave type="submit">Salvar</ButtonSave>
             </Content>
           </form>
